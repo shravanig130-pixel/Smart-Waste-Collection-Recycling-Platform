@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CleanRoute — Request a Waste Pickup</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>♻️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">♻️</span>
+      <span class="display">CleanRoute</span>
+    </div>
+    <nav class="topnav">
+      <a href="/" class="active">Request pickup</a>
+      <a href="/admin.html">Admin</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>Get your waste picked up without the guesswork.</h1>
+    <p>Pick a category, tell us where and when, and get a ticket you can track. Collection teams see it the moment you submit.</p>
+  </div>
+
+  <div class="tabbar">
+    <button class="tabbtn active" data-tab="new">New request</button>
+    <button class="tabbtn" data-tab="track">Track a request</button>
+  </div>
+
+  <!-- NEW REQUEST -->
+  <section class="tabpanel active" id="panel-new">
+    <div class="card">
+      <div id="new-error-box"></div>
+      <form id="request-form">
+        <div class="form-grid">
+          <div class="span-2">
+            <label>Waste category <span class="req">*</span></label>
+            <div class="category-grid" id="category-grid">
+              <button type="button" class="category-opt" data-value="organic"><span class="emoji">🍃</span>Organic / kitchen</button>
+              <button type="button" class="category-opt" data-value="recyclable"><span class="emoji">🧴</span>Recyclable</button>
+              <button type="button" class="category-opt" data-value="e-waste"><span class="emoji">🔌</span>E-waste</button>
+              <button type="button" class="category-opt" data-value="hazardous"><span class="emoji">⚠️</span>Hazardous</button>
+              <button type="button" class="category-opt" data-value="bulky"><span class="emoji">🛋️</span>Bulky / furniture</button>
+              <button type="button" class="category-opt" data-value="general"><span class="emoji">🗑️</span>General</button>
+            </div>
+            <input type="hidden" id="category" name="category">
+          </div>
+
+          <div>
+            <label for="name">Full name <span class="req">*</span></label>
+            <input id="name" name="name" type="text" placeholder="Asha Patil" required>
+          </div>
+          <div>
+            <label for="phone">Phone number <span class="req">*</span></label>
+            <input id="phone" name="phone" type="tel" placeholder="+91 98765 43210" required>
+          </div>
+          <div class="span-2">
+            <label for="email">Email (optional)</label>
+            <input id="email" name="email" type="email" placeholder="asha@example.com">
+          </div>
+
+          <div class="span-2">
+            <label for="address">Pickup address <span class="req">*</span></label>
+            <input id="address" name="address" type="text" placeholder="Flat 4B, Sunrise Apartments, MG Road" required>
+          </div>
+          <div>
+            <label for="city">City <span class="req">*</span></label>
+            <input id="city" name="city" type="text" placeholder="Pune" required>
+          </div>
+          <div>
+            <label for="pincode">Pincode</label>
+            <input id="pincode" name="pincode" type="text" placeholder="411001">
+          </div>
+          <div class="span-2">
+            <label for="landmark">Landmark (optional)</label>
+            <input id="landmark" name="landmark" type="text" placeholder="Opposite City Hospital">
+          </div>
+
+          <div>
+            <label for="preferredDate">Preferred pickup date <span class="req">*</span></label>
+            <input id="preferredDate" name="preferredDate" type="date" required>
+          </div>
+          <div>
+            <label for="preferredSlot">Preferred time slot</label>
+            <select id="preferredSlot" name="preferredSlot">
+              <option value="">No preference</option>
+              <option value="morning">Morning (8–11 AM)</option>
+              <option value="afternoon">Afternoon (12–3 PM)</option>
+              <option value="evening">Evening (4–7 PM)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="quantity">Approx. quantity</label>
+            <input id="quantity" name="quantity" type="text" placeholder="2 bags / 1 sofa / 3 kg">
+          </div>
+          <div class="span-2">
+            <label for="description">Description (optional)</label>
+            <textarea id="description" name="description" placeholder="Any details collectors should know — access instructions, item condition, etc."></textarea>
+          </div>
+        </div>
+
+        <div style="margin-top:22px; display:flex; align-items:center; gap:14px;">
+          <button type="submit" class="btn" id="submit-btn">Submit request</button>
+          <span class="help" id="submit-help"></span>
+        </div>
+      </form>
+    </div>
+
+    <div id="confirmation" style="display:none; margin-top:24px;"></div>
+  </section>
+
+  <!-- TRACK -->
+  <section class="tabpanel" id="panel-track">
+    <div class="card">
+      <label for="track-query">Request ID or phone number</label>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <input id="track-query" type="text" placeholder="e.g. CR-XXXXX or your phone number" style="flex:1; min-width:220px;">
+        <button class="btn" id="track-btn">Track</button>
+      </div>
+      <div id="track-error-box"></div>
+    </div>
+    <div id="track-results" style="margin-top:22px;"></div>
+  </section>
+</div>
+
+<div class="footer">
+  <div class="wrap">CleanRoute — a lightweight waste collection request platform. Built for organized, responsible disposal.</div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

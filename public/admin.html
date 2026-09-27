@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CleanRoute — Admin Dashboard</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>♻️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">♻️</span>
+      <span class="display">CleanRoute</span>
+    </div>
+    <nav class="topnav">
+      <a href="/">Request pickup</a>
+      <a href="/admin.html" class="active">Admin</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="hero" style="padding-bottom:0;">
+    <h1>Collection dashboard</h1>
+    <p>Review incoming requests, schedule pickups, and keep the queue moving.</p>
+  </div>
+
+  <div class="stat-grid" id="stat-grid"></div>
+
+  <div class="two-col" style="margin-top:26px;">
+    <div class="card">
+      <h3 style="margin-bottom:14px;">Requests by status</h3>
+      <div id="status-bars"></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:14px;">Requests by category</h3>
+      <div id="category-bars"></div>
+    </div>
+  </div>
+
+  <div class="tabbar" style="margin-top:30px;">
+    <button class="tabbtn active" data-tab="queue">Active queue</button>
+    <button class="tabbtn" data-tab="history">Pickup history</button>
+  </div>
+
+  <section class="tabpanel active" id="panel-queue">
+    <div class="toolbar">
+      <div class="field">
+        <label>Search</label>
+        <input id="search" type="text" placeholder="Name, phone, ID, address…">
+      </div>
+      <div class="field">
+        <label>Status</label>
+        <select id="filter-status">
+          <option value="">All</option>
+          <option>Pending</option>
+          <option>Scheduled</option>
+          <option>Collected</option>
+          <option>Cancelled</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Category</label>
+        <select id="filter-category">
+          <option value="">All</option>
+          <option value="organic">Organic / kitchen</option>
+          <option value="recyclable">Recyclable</option>
+          <option value="e-waste">E-waste</option>
+          <option value="hazardous">Hazardous</option>
+          <option value="bulky">Bulky / furniture</option>
+          <option value="general">General</option>
+        </select>
+      </div>
+      <div class="field">
+        <button class="btn secondary" id="refresh-btn">Refresh</button>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table class="req-table">
+        <thead>
+          <tr>
+            <th>Ticket</th>
+            <th>Requester</th>
+            <th>Category</th>
+            <th>Pickup</th>
+            <th>Preferred date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="queue-body"></tbody>
+      </table>
+    </div>
+    <div id="queue-empty"></div>
+  </section>
+
+  <section class="tabpanel" id="panel-history">
+    <div id="history-list"></div>
+  </section>
+</div>
+
+<div class="footer">
+  <div class="wrap">CleanRoute Admin — updates write straight back to the request queue collectors and residents both see.</div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>
